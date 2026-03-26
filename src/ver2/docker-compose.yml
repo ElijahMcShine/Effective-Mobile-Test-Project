@@ -1,0 +1,19 @@
+services:
+  ver2-proxy:
+    build: ./nginx/
+    container_name: ver2-proxy
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 80:80
+    networks:
+      - ver2-bridge
+  ver2-webserver:
+    build: ./backend/
+    container_name: ver2-webserver
+    networks:
+      - ver2-bridge
+
+networks:
+  ver2-bridge:
+    driver: bridge

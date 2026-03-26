@@ -1,0 +1,25 @@
+services:
+  ver1-proxy:
+    build: ./nginx/
+    container_name: ver1-proxy
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 80:80
+    networks:
+      - ver1-bridge
+  ver1-webserver:
+    build: ./backend/
+    container_name: ver1-webserver
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - ver1-bridge
+
+
+networks:
+  ver1-bridge:
+    driver: bridge
