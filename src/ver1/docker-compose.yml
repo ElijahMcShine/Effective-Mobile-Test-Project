@@ -11,6 +11,8 @@ services:
   ver1-webserver:
     build: ./backend/
     container_name: ver1-webserver
+    env_file:
+      - ./python.env
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/"]
       interval: 30s
