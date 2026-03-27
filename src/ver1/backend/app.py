@@ -12,6 +12,8 @@ class MyHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes("<html><head><title>Hello from Effective Mobile!</title></head>", "utf-8"))
             self.wfile.write(bytes("<body><p>Hello from Effective Mobile!</p>", "utf-8"))
             self.wfile.write(bytes("</body></html>", "utf-8"))
+            print("Host:" + str(self.headers.get_all("Host")) + " X-Real-IP:" + str(self.headers.get_all("X-Real-IP")) \
+                  + " X-Forwarded-For:" + str(self.headers.get_all("X-Forwarded-For")) + " X-Forwarded-Proto:" + str(self.headers.get_all("X-Forwarded-Proto")))
         else: self.send_response(404)
 
 
