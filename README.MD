@@ -139,3 +139,6 @@ fastcgi_pass ver2-webserver:8080;
 Сама страница ответа представляет гипертекст в файле src/ver2/backend/index.html
 
 По умолчанию nginx слушает порт 80, но дополнительно открыт порт 8080.
+
+
+https://fastfox.pro/blog/tutorials/reverse-proxy-header-hygiene/

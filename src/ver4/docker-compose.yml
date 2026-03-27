@@ -1,0 +1,50 @@
+services:
+  ver4-proxy:
+    build: ./nginx/
+    container_name: ver4-proxy
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 80:80
+    networks:
+      - ver4-bridge
+  ver4-webserver:
+    build: ./backend/
+    container_name: ver4-webserver
+    restart: always
+    env_file:
+      - ./python.env
+    environment:
+      - POSTGRES_HOST=ver4-db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - ver4-bridge
+    depends_on: 
+      ver4-db: 
+        condition: service_healthy
+  ver4-db:
+    build: ./postgresql/
+    container_name: ver4-db
+    shm_size: 128mb
+    restart: always
+    env_file:
+      - ./postgres.env
+    environment:
+      TZ: "Europe/Moscow"
+    healthcheck:  
+      test: ["CMD-SHELL", "pg_isready -U postgres"]  
+      interval: 10s  
+      timeout: 5s  
+      retries: 3  
+    networks:
+      - ver4-bridge
+    
+
+networks:
+  ver4-bridge:
+    driver: bridge

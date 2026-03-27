@@ -1,0 +1,6 @@
+#.venv
+#.idea
+#.vscode
+*
+!app.py
+!requirements.txt

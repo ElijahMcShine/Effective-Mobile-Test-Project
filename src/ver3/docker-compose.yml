@@ -1,6 +1,7 @@
 services:
   ver3-proxy:
     build: ./nginx/
+    restart: always
     container_name: ver3-proxy
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
@@ -10,6 +11,7 @@ services:
       - ver3-bridge
   ver3-webserver:
     build: ./backend/
+    restart: always
     container_name: ver3-webserver
     volumes:
       - ./backend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
